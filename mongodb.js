@@ -160,5 +160,67 @@ const doc = {
 // 　　passRawResult： 如果为真，将原始结果作为回调函数第三个参数。
 //
 
+// 删(D)
+// todo Model.remove(conditions, [callback])
+
+
+// 删除“author”值为“L”的记录。
+// blogModel.remove({author: 'L'},(err, docs)=>{
+//   if(err) console.log(err);
+//   console.log(docs)
+// });
+
+// todo Model.findByIdAndRemove(id, [options], [callback])
+// id：指定_id的值；update：需要修改的数据；options控制选项；callback回调函数。
+// options有以下选项：
+// 　　sort： 如果有多个查询条件，按顺序进行查询更新。
+// 　　select： 设置数据的返回。
+
+//Model.findOneAndRemove(conditions, [options], [callback])
+// conditions：查询条件；update：需要修改的数据；options控制选项；callback回调函数。
+// options有以下选项：
+// 　　sort： 如果有多个查询条件，按顺序进行查询更新。
+// 　　maxTimeMS： 查询用时上限。
+// 　　select： 设置数据的返回。
+
+
+
+// todo Query#exec([operation], [callback])
+//使用find()、$where之类查询返回的是Mongoose自己封装的Query对象，使用find()可以在函数最后接上回调来获取查询到的数据。
+// blogModel.find(
+//     {title:'Mongoose', 'meta.votes': 100},
+//     {title:1, author:1, body:1}
+//   ).exec((err, docs)=>{
+//   if(err) console.log(err);
+//   console.log(docs)
+// });
+
+
+// 配合各种查询符可以方便的实现复杂的查询。
+// 比如我需要查询“title”中以“Mongoose”开头，并且“meta”中“votes”的值小余100。并且按“meta”中“votes”的值升序排序。
+// blogModel.find([
+//   { title:{ $regex: 'Mongoose.+','$options':'i'}},
+//   { 'meta.votes':{ $lt: 100}}
+// ]).sort({ 'meta.votes':1}
+// ).exec((err, docs)=>{
+//   if(err) console.log(err);
+//   console.log(docs)
+// });
+
+//比较查询运算符
+// todo $equals 等于 ／ $gt 大于 ／ $gte 大于等于 ／ $lt 小余 ／ $lte 小余等于 ／ $ne 不等于 ／ $in 在数组中 ／ $nin 不在数组中
+
+// blogModel.find({'meta.votes': {$lte: 100}}).exec((err,docs)=>{
+//   if(err) console.log(err);
+//   console.log(docs)
+// });
+
+// blogModel.find({$and: [
+//   {'meta.votes':{$gte: 50}},
+//   {'meta.votes':{$lt: 101}}
+// ]}).exec((err,docs)=>{
+//   if(err)console.log(err);
+//   console.log(docs)
+// });
 
 
